@@ -31,7 +31,7 @@
                 </div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo">
-                    <p>&copy; 2011 Universidad de Montemorelos A.C.</p>
+                    <p style="text-align:right;">&copy; 2011 Universidad de Montemorelos A.C.</p>
                 </div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
                 <r:layoutResources/>
