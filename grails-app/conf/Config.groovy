@@ -1,8 +1,6 @@
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
-grails.config.locations = [ "file:${userHome}/.grails/${appName}-config.groovy" ]
-
 // grails.config.locations = [ "classpath:${appName}-config.properties",
 //                             "classpath:${appName}-config.groovy",
 //                             "file:${userHome}/.grails/${appName}-config.properties",
@@ -62,7 +60,6 @@ grails.exceptionresolver.params.exclude = ['password']
 environments {
     development {
         grails.logging.jul.usebridge = true
-        grails.gsp.enable.reload = true
     }
     production {
         grails.logging.jul.usebridge = false
@@ -78,9 +75,6 @@ log4j = {
     //appenders {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
-    appenders {
-        console name:'stdout', layout:pattern(conversionPattern: '%d [SILOE] %5p [%c{2}] | %m%n')
-    }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -95,24 +89,4 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
-    
-    debug  'grails.app'
-
-    //trace  'org.hibernate.type'
-
-    off    'grails.app.services.org.grails.plugin.resource',
-           'grails.app.taglib.org.grails.plugin.resource',
-           'grails.app.resourceMappers.org.grails.plugin.resource'
-    
 }
-
-grails.gorm.failOnError = true
-grails.gorm.default.mapping = {
-   id generator:'identity'
-}
-
-// Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'general.Usuario'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'general.UsuarioRol'
-grails.plugins.springsecurity.authority.className = 'general.Rol'
-
