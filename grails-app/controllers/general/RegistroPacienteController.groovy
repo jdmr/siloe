@@ -10,6 +10,8 @@ class RegistroPacienteController {
     def crea() {
         def usuario = new Usuario(params)
         if (usuario.save(flush:true)) {
+            def rol = Rol.findByAuthority('ROLE_PACIENTE')
+            def ur = UsuarioRol.create(usuario, rol, true)
             flash.message = "El usuario $usuario.username ha sido creado"
             redirect(action:'ver',id:usuario.id)
         } else {

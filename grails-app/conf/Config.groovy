@@ -107,6 +107,9 @@ log4j = {
 }
 
 grails.gorm.failOnError = true
+grails.gorm.default.mapping = {
+   id generator:'identity'
+}
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'general.Usuario'

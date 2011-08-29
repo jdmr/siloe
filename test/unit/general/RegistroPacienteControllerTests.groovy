@@ -20,6 +20,7 @@ class RegistroPacienteControllerTests {
     
     @Test
     void debieraRegistrarUnPaciente() {
+        Usuario.metaClass.encodePassword << {password = "AAAAA"}
         assert Usuario.count() == 0
         
         params.username = 'test'
@@ -31,5 +32,7 @@ class RegistroPacienteControllerTests {
         assert flash.message != null
         assert flash.message == 'El usuario test ha sido creado'
         assert Usuario.count() == 1
+        def x = Usuario.get(1)
+        assert 'AAAAA' == x.password
     }
 }
