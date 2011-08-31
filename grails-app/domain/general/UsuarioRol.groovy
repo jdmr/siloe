@@ -23,6 +23,10 @@ class UsuarioRol implements Serializable {
 		builder.toHashCode()
 	}
 
+    String toString() {
+        return "${usuario?.username} | ${rol?.authority}"
+    }
+
 	static UsuarioRol get(long usuarioId, long rolId) {
 		find 'from UsuarioRol where usuario.id=:usuarioId and rol.id=:rolId',
 			[usuarioId: usuarioId, rolId: rolId]

@@ -42,4 +42,4 @@ grails.project.dependency.resolution = {
     }
 }
 
-codenarc.propertiesFile=codenarc.properties
+codenarc.propertiesFile='codenarc.properties'

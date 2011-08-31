@@ -1,5 +1,7 @@
 package general
 
+import org.apache.commons.lang.builder.HashCodeBuilder
+
 class Usuario {
 
 	transient springSecurityService
@@ -37,4 +39,22 @@ class Usuario {
 	protected void encodePassword() {
 		password = springSecurityService.encodePassword(password)
 	}
+
+	boolean equals(other) {
+		if (!(other instanceof Usuario)) {
+			return false
+		}
+
+		other.id == this.id
+	}
+
+	int hashCode() {
+		def builder = new HashCodeBuilder()
+		builder.append(this.id)
+		builder.toHashCode()
+	}
+
+    String toString() {
+        return username
+    }
 }
