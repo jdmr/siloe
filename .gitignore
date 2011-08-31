@@ -8,3 +8,4 @@ target
 web-app/WEB-INF/classes
 *.orig
 /.settings/
+CodeNarcReport.html

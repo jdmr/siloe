@@ -41,3 +41,5 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
     }
 }
+
+codenarc.propertiesFile=codenarc.properties
