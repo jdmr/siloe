@@ -15,12 +15,26 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 		<g:layoutHead/>
+                <r:layoutResources/>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>
+                <div id="grailsLogo" role="banner">
+                    <div id="logo">
+                        <a href="${createLink(uri: '/')}" style="text-decoration:none;font-size:3em;letter-spacing:2px;">SILOÉ</a>
+                    </div>
+                    <div class="encabezado">
+                        <sec:ifLoggedIn>
+                            <p><a href="${createLink(controller:'usuario',action:'perfil')}"><g:message code="welcome.header.message" /> <sec:username /></a></p>
+                            <p><a href="${createLink(controller:'logout')}"><g:message code="logout.header.message" /></a></p>
+                        </sec:ifLoggedIn>
+                    </div>
+                </div>
 		<g:layoutBody/>
-		<div class="footer" role="contentinfo"></div>
+		<div class="footer" role="contentinfo">
+                    <p style="text-align:right;">&copy; 2011 Universidad de Montemorelos A.C.</p>
+                </div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+                <r:layoutResources/>
 		<g:javascript library="application"/>
 	</body>
 </html>
