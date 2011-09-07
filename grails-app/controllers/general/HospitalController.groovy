@@ -8,7 +8,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 class HospitalController {
     def springSecurityService
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
     def index = {
         redirect(action: "lista", params: params)
@@ -27,6 +27,7 @@ class HospitalController {
 
     def crea = {
         def hospital = new Hospital(params)
+        log.debug "hospital >> " hospital.nombre
         if (hospital.save(flush: true)) {
             flash.message = message(code: 'default.created.message', args: [message(code: 'hospital.label', default: 'Hospital'), hospital.id])
             redirect(action: "ver", id: hospital.id)
