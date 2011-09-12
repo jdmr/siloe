@@ -4,6 +4,7 @@ package general
 import grails.test.mixin.*
 import org.junit.*
 
+
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
@@ -17,6 +18,7 @@ class HospitalControllerTests {
         assert response.redirectedUrl == '/hospital/lista'
     }
     
+    
     @Test
     void debieraRegistrarUnHospital() {
         assert Hospital.count() == 0
@@ -24,10 +26,9 @@ class HospitalControllerTests {
         params.nombre = 'test'
         params.direccion = 'test'
         params.telefono = 'test'
-        
-        controller.crea()
-        
-        assertEquals '/hospital/ver/1', response.redirectedUrl
+
+        controller.creaste()
+
         assert response.redirectedUrl == '/hospital/ver/1'
         assert flash.message != null
         assert flash.message == 'El hospital test ha sido creado'
@@ -35,7 +36,7 @@ class HospitalControllerTests {
         def x = Hospital.get(1)
         assert 'test' == x.nombre
     }
-
+    
     @Test
     void hospitaldebieraAgregarAlmacen() {
         def hospital = new Hospital(
@@ -52,11 +53,13 @@ class HospitalControllerTests {
             , hospital: new Hospital() //se debe traer en secion
         ).save()
         
-        controller.edita()
-        assert response.redirectUrl == '/hospital/edita/1'
+        def model = controller.edita()
+        assert model.hospital
+        
+        assert response.redirectedUrl == '/hospital/edita/1'
         params.almacen = almacen
         controller.actualiza()
-        assert response.redirectUrl == '/hospital/ver/1'
+        assert response.redirectedUrl == '/hospital/ver/1'
 
         assert hospital.almacen == almacen //hospital debe estar en secion
     }

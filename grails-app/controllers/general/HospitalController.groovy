@@ -25,18 +25,18 @@ class HospitalController {
         return [hospital: hospital]
     }
 
-    def crea = {
+    //no cambiar el nombre por que con el nombre "crea" no jala
+    def creaste = {
         def hospital = new Hospital(params)
-        log.debug "hospital >> " hospital.nombre
         if (hospital.save(flush: true)) {
-            flash.message = message(code: 'default.created.message', args: [message(code: 'hospital.label', default: 'Hospital'), hospital.id])
-            redirect(action: "ver", id: hospital.id)
-        }
-        else {
-            render(view: "nuevo", model: [hospital: hospital])
+            flash.message = message(code: "El hospital $hospital.nombre ha sido creado")
+            redirect(action: 'ver', id: hospital.id)
+        } else {
+            log.error("No se pudo crear el hospital")
+            render(view:'index', model:[hopital: hospital])
         }
     }
-
+    
     def ver = {
         def hospital = Hospital.get(params.id)
         if (!hospital) {
