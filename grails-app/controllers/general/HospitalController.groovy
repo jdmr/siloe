@@ -59,28 +59,35 @@ class HospitalController {
         }
     }
 
-    def actualiza = {
+    def actualizamos = {
+    println '1=========='
         def hospital = Hospital.get(params.id)
         if (hospital) {
+            println '2=========='
             if (params.version) {
+                println '3=========='
                 def version = params.version.toLong()
                 if (hospital.version > version) {
-                    
+                        println '4=========='
                     hospital.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'hospital.label', default: 'Hospital')] as Object[], "Another user has updated this Hospital while you were editing")
                     render(view: "edita", model: [hospital: hospital])
                     return
                 }
             }
+                println '5=========='
             hospital.properties = params
             if (!hospital.hasErrors() && hospital.save(flush: true)) {
+                println '6=========='
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'hospital.label', default: 'Hospital'), hospital.id])
                 redirect(action: "ver", id: hospital.id)
             }
             else {
+                println '7=========='
                 render(view: "edita", model: [hospital: hospital])
             }
         }
         else {
+            println '8=========='
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'hospital.label', default: 'Hospital'), params.id])
             redirect(action: "lista")
         }
