@@ -21,14 +21,14 @@ class BootStrap {
         }
         
         log.info "Validando usuarios"
-        def admin = general.UsuarioRol.findByRol(rolDoctor)
+        def admin = general.UsuarioRol.findByRol(rolAdmin)
         if (!admin) {
             admin = new general.Usuario(
                 username:'admin'
                 ,password:'admin'
             )
             admin.save(flush:true)
-            general.UsuarioRol.create(admin, rolDoctor, true)
+            general.UsuarioRol.create(admin, rolAdmin, true)
         }
 
         log.info("Aplicacion inicializada")

@@ -27,7 +27,7 @@ class AlmacenController {
         return [almacen: almacen]
     }
 
-    def crea = {
+    def crea() {
         log.debug "Creando almacen"
         def almacen = new Almacen(params)
         if (almacen.save(flush: true)) {
