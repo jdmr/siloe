@@ -6,4 +6,9 @@ class Contrato {
     static belongsTo = [seguro:Seguro]
     static constraints = {
     }
+
+	String toString(){
+		return folio
+	}	
+
 }
