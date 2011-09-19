@@ -7,4 +7,8 @@ class Seguro {
     static constraints = {
 	
     }
+	
+	String toString() {
+		return nombre
+	}
 }
