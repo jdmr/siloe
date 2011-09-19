@@ -1,18 +1,18 @@
 package general
 
-class Hospital {
-
+class Almacen {
     String nombre
     String direccion
     String telefono
-    Set almacenes
-
-    static hashMany = [almacenes: Almacen]
+    boolean principal = false
+    Hospital hospital
     
+    static belogsTo = [hospital: Hospital]
+
     static constraints = {
-        nombre blank: false, maxSize: 128
+        nombre maxSize: 128
         direccion blank: false
         telefono blank: false
-        almacenes nullable: true
+        hospital blank: false
     }
 }
