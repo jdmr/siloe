@@ -15,4 +15,8 @@ class Hospital {
         telefono blank: false
         almacenes nullable: true
     }
+
+    String toString() {
+        return nombre
+    }
 }

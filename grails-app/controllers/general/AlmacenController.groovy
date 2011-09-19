@@ -11,12 +11,14 @@ class AlmacenController {
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
     def index = {
+        log.debug "Index de almacen"
         redirect(action: "lista", params: params)
     }
 
 	def lista = {
+        log.debug "lista de almacenes"
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[almacens: Almacen.list(params), totalDeAlmacens: Almacen.count()]
+		[almacenes: Almacen.list(params), totalDeAlmacenes: Almacen.count()]
 	}
 
     def nuevo = {
@@ -26,6 +28,7 @@ class AlmacenController {
     }
 
     def crea = {
+        log.debug "Creando almacen"
         def almacen = new Almacen(params)
         if (almacen.save(flush: true)) {
             flash.message = message(code: 'default.created.message', args: [message(code: 'almacen.label', default: 'Almacen'), almacen.id])
