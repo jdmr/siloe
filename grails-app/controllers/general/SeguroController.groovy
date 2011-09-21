@@ -2,6 +2,7 @@ package general
 
 import org.springframework.dao.DataIntegrityViolationException
 
+//@Secured('ROLE_ADMIN')
 class SeguroController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
