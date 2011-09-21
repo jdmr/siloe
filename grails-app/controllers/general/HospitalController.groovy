@@ -19,6 +19,7 @@ class HospitalController {
 		[hospitals: Hospital.list(params), totalDeHospitals: Hospital.count()]
 	}
 
+    @Secured(['ROLE_DOCTOR'])
     def nuevo = {
         def hospital = new Hospital()
         hospital.properties = params
@@ -26,6 +27,7 @@ class HospitalController {
     }
 
     //no cambiar el nombre por que con el nombre "crea" no jala
+    @Secured(['ROLE_DOCTOR'])
     def creaste = {
         def hospital = new Hospital(params)
         if (hospital.save(flush: true)) {

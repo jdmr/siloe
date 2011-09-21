@@ -12,6 +12,9 @@ class Usuario {
 	boolean accountExpired = false
 	boolean accountLocked = false
 	boolean passwordExpired = false
+        Hospital hospital
+        
+        static belongsTo = [Hospital]
 
 	static constraints = {
 		username blank: false, unique: true

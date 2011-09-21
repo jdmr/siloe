@@ -20,12 +20,27 @@ class BootStrap {
             }
         }
         
+        log.info "Validando hospitales"
+        def hospitales = general.Hospital.list([max:1])
+        def hospital
+        if(hospitales){
+            hospital = hospitales.get(0)
+        }
+        if(!hospital){
+            hospital = new general.Hospital(
+                nombre : "TEST",
+                direccion : "TEST",
+                telefono : "TEST"
+            ).save()
+        }
+        
         log.info "Validando usuarios"
         def admin = general.UsuarioRol.findByRol(rolAdmin)
         if (!admin) {
             admin = new general.Usuario(
-                username:'admin'
-                ,password:'admin'
+                username:'admin',
+                password:'admin',
+                hospital: hospital
             )
             admin.save(flush:true)
             general.UsuarioRol.create(admin, rolAdmin, true)
