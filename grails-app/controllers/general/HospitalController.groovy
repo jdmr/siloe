@@ -10,17 +10,17 @@ class HospitalController {
 
     static allowedMethods = [crea: "POST", actualiza: "POST", elimina: "POST"]
 
-    def index = {
+    def index () {
         redirect(action: "lista", params: params)
     }
 
-	def lista = {
+	def lista () {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		[hospitals: Hospital.list(params), totalDeHospitals: Hospital.count()]
 	}
 
     @Secured(['ROLE_DOCTOR'])
-    def nuevo = {
+    def nuevo () {
         def hospital = new Hospital()
         hospital.properties = params
         return [hospital: hospital]
@@ -28,7 +28,7 @@ class HospitalController {
 
     //no cambiar el nombre por que con el nombre "crea" no jala
     @Secured(['ROLE_DOCTOR'])
-    def creaste = {
+    def creaste () {
         def hospital = new Hospital(params)
         if (hospital.save(flush: true)) {
             flash.message = message(code: "El hospital $hospital.nombre ha sido creado")
@@ -39,7 +39,7 @@ class HospitalController {
         }
     }
     
-    def ver = {
+    def ver () {
         def hospital = Hospital.get(params.id)
         if (!hospital) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'hospital.label', default: 'Hospital'), params.id])
@@ -50,7 +50,7 @@ class HospitalController {
         }
     }
 
-    def edita = {
+    def edita () {
         def hospital = Hospital.get(params.id)
         if (!hospital) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'hospital.label', default: 'Hospital'), params.id])
@@ -61,7 +61,7 @@ class HospitalController {
         }
     }
 
-    def actualizamos = {
+    def actualizamos () {
     println '1=========='
         def hospital = Hospital.get(params.id)
         if (hospital) {
@@ -95,7 +95,7 @@ class HospitalController {
         }
     }
 
-    def elimina = {
+    def elimina () {
         def hospital = Hospital.get(params.id)
         if (hospital) {
             try {
@@ -113,4 +113,27 @@ class HospitalController {
             redirect(action: "lista")
         }
     }
+    
+    @Secured(['ROLE_HOSPITAL'])
+    def pendientes () {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [pendientes: DoctorHospital.findAllByAutorizado(false, params), totalDePendientes: DoctorHospital.countByAutorizado(false)]
+    }
+    
+    @Secured(['ROLE_HOSPITAL'])
+    def autorizar () {
+        def pendiente = DoctorHospital.get(params.id)
+        pendiente.autorizado = true
+        pendiente.save()
+        redirect (action: "pendientes")
+    }
+    
+    @Secured(['ROLE_HOSPITAL'])
+    def rechazar () {
+        def pendiente = DoctorHospital.get(params.id)
+        pendiente.autorizado = true
+        pendiente.delete()
+        redirect (action: "pendientes")
+    }
+    
 }

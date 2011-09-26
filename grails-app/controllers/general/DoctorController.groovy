@@ -12,7 +12,12 @@ class DoctorController {
     
     def guardarRegistro(){
         def doctor = new Usuario(params)
-        doctor.save()
+        def doctorhospital = new DoctorHospital(
+            doctor: doctor
+            , hospital: doctor.hospital
+        ).save()
+        
+        //doctor.save()
         redirect(action:"avisoRegistro",id:doctor.id)
     }
     

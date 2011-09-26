@@ -4,7 +4,7 @@ class BootStrap {
         log.info("Inicializando aplicacion")
         log.info "Validando roles"
         def rolAdmin = general.Rol.findByAuthority('ROLE_ADMIN')
-        if (general.Rol.count() != 3) {
+        if (general.Rol.count() != 4) {
             if (!rolAdmin) {
                 rolAdmin = new general.Rol(authority: 'ROLE_ADMIN').save(flush:true)
             }
@@ -17,6 +17,11 @@ class BootStrap {
             def rolPaciente = general.Rol.findByAuthority('ROLE_PACIENTE')
             if (!rolPaciente) {
                 rolPaciente = new general.Rol(authority: 'ROLE_PACIENTE').save(flush:true)
+            }
+            
+            def rolHospital = general.Rol.findByAuthority('ROLE_HOSPITAL')
+            if (!rolHospital) {
+                rolHospital = new general.Rol(authority: 'ROLE_HOSPITAL').save(flush:true)
             }
         }
         

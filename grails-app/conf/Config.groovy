@@ -118,5 +118,7 @@ grails.plugins.springsecurity.authority.className = 'general.Rol'
 
 grails.plugins.springsecurity.roleHierarchy = '''
    ROLE_ADMIN > ROLE_DOCTOR
+   ROLE_ADMIN > ROLE_HOSPITAL
    ROLE_DOCTOR > ROLE_PACIENTE
+   ROLE_HOSPITAL > ROLE_PACIENTE
 '''
