@@ -136,4 +136,37 @@ class HospitalController {
         redirect (action: "pendientes")
     }
     
+    def registrarDoctor(){
+        def doctor= new Usuario(params)
+        return [doctor:doctor]
+            
+        
+    }
+    
+    def guardaDoctor(){
+        def doctor=new Usuario(params)
+        doctor.save()
+        redirect (action: "informaDoctor",id:doctor.id)
+        
+    }
+    
+    def informaDoctor(){
+        def doctor =Usuario.get(params.id)
+        return [doctor:doctor]
+        
+    }
+    
+    def buscarDoctores() {
+        log.debug("Params: $params")
+        def filtro = "%${params.term}%"
+        def doctores = Usuario.executeQuery("select d from Usuario d, UsuarioRol dr where dr.rol.authority = 'ROLE_DOCTOR' and d.username like :filtro", [filtro: filtro])
+        def lista = []
+        for(doctor in doctores) {
+            lista << [id:doctor.id, value:doctor.username]
+        }
+        log.debug("Lista: $lista")
+        log.debug("ListaJSON: ${lista as JSON}")
+        render lista as JSON
+    }
+    
 }
