@@ -70,6 +70,16 @@
               </label>
               <g:textField name="username2" value=""/>
             </div>
+            <div class="fieldcontain ${hasErrors(bean: doctor, field: 'hospitalId', 'error')} required">
+              <label for="hospitalId">
+                <g:message code="hospital.label" default="Hospital" />
+                <span class="required-indicator">*</span>
+              </label>
+              <g:select name="hospitalId"
+                        from="${general.Hospital.list()}"
+                        value="${doctor?.hospital?.id}"
+                        optionKey="id" />
+            </div>
           </fieldset>
           <fieldset class="buttons">
             <g:submitButton name="asignaDoctorBtn" class="save" value="${message(code: 'hospital.asignaDoctor', default: 'Asigna Doctor')}" />

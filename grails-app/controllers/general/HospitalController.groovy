@@ -139,13 +139,14 @@ class HospitalController {
     def registrarDoctor(){
         def doctor= new Usuario(params)
         return [doctor:doctor]
-            
-        
     }
     
     def guardaDoctor(){
-        def doctor=new Usuario(params)
-        doctor.save()
+        def rolDoctor = Rol.findByAuthority('ROLE_DOCTOR')
+        def doctor = new Usuario(params).save()
+        
+        UsuarioRol.create(doctor, rolDoctor)
+        
         redirect (action: "informaDoctor",id:doctor.id)
         
     }
@@ -159,7 +160,13 @@ class HospitalController {
     def buscarDoctores() {
         log.debug("Params: $params")
         def filtro = "%${params.term}%"
-        def doctores = Usuario.executeQuery("select d from Usuario d, UsuarioRol dr where dr.rol.authority = 'ROLE_DOCTOR' and d.username like :filtro", [filtro: filtro])
+        def doctores = Usuario.executeQuery("""
+            select doctor 
+            from Usuario doctor, UsuarioRol usuarioRol 
+            where doctor = usuarioRol.usuario
+            and usuarioRol.rol.authority = 'ROLE_DOCTOR' 
+            and doctor.username like :filtro
+        """, [filtro: filtro])
         def lista = []
         for(doctor in doctores) {
             lista << [id:doctor.id, value:doctor.username]
@@ -167,6 +174,19 @@ class HospitalController {
         log.debug("Lista: $lista")
         log.debug("ListaJSON: ${lista as JSON}")
         render lista as JSON
+    }
+    
+    def asignaDoctor() {
+        def doctor = Usuario.get(params.id)
+        def hospital = Hospital.get(params.hospitalId)
+        if (doctor && hospital) {
+            doctor.hospital = hospital
+            doctor.save()
+            redirect(action: "informaDoctor",id:doctor.id)
+        } else {
+            throw new RuntimeException("No se pudo registrar al doctor")
+        }
+        
     }
     
 }
